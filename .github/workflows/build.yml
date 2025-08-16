@@ -1,0 +1,22 @@
+# This builds each sample
+# Assets are built artifacts (e.g. .bin, .hex files)
+# https://github.com/circuitdojo/nrf9160-feather-examples-and-drivers/blob/v2.2.x/.github/workflows/build.yml
+
+name: Build
+
+on: [push, pull_request] # when to build/run
+
+jobs:
+  build-in-docker:
+    runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/nrfconnect/sdk-nrf-toolchain:v3.0.0  # steps in this job are executed inside sdk-nrf-toolchain container
+      env:
+        ACCEPT_JLINK_LICENSE: 1 # set if you want to install JLink
+    defaults:
+      run:
+        shell: bash  # It is required to set `bash` as default shell
+    steps:
+      - name: Run command in NCS toolchain environment
+        run: "west --version"  # This command is executed in bash shell `docker exec <container> bash -c west --version`
+        # It will also install JLink if ACCEPT_JLINK_LICENSE is set to 1
