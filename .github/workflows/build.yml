@@ -18,5 +18,5 @@ jobs:
         shell: bash  # It is required to set `bash` as default shell
     steps:
       - name: Run command in NCS toolchain environment
-        run: "west --version && west init && west update && west build -b native_sim -t run"  # This command is executed in bash shell `docker exec <container> bash -c west --version`
+        run: "west --version && west init && rm -rf build && west update && west build -p auto -b native_sim . --pristine  -- -DCONF_FILE=prj.conf"  # This command is executed in bash shell `docker exec <container> bash -c west --version`
         # It will also install JLink if ACCEPT_JLINK_LICENSE is set to 1
